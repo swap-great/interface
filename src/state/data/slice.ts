@@ -15,6 +15,8 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [SupportedChainId.OPTIMISM]: 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-optimism-dev',
 
   [SupportedChainId.POLYGON]: 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswap-v3-polygon',
+  // change
+  [SupportedChainId.BASE_SEPOLIA]: 'https://api.studio.thegraph.com/query/64677/0xswap-basetest/version/latest',
 }
 
 export const api = createApi({

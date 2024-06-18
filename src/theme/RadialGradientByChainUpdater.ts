@@ -60,6 +60,10 @@ export default function RadialGradientByChainUpdater(): null {
         backgroundRadialGradientElement.style.background = darkMode ? polygonDarkGradient : polygonLightGradient
         backgroundRadialGradientElement.style.backgroundBlendMode = darkMode ? 'overlay,normal' : 'multiply,normal'
         break
+      case SupportedChainId.BASE_SEPOLIA: {
+        backgroundRadialGradientElement.style.background = darkMode ? '#101010' : ''
+        break
+      }
       default:
         setBackground(initialStyles)
         backgroundRadialGradientElement.style.background = ''

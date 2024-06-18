@@ -1,9 +1,9 @@
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES, SupportedLocale } from 'constants/locales'
-import { useMemo } from 'react'
+// import { useMemo } from 'react'
 import store from 'state'
-import { useUserLocale } from 'state/user/hooks'
+// import { useUserLocale } from 'state/user/hooks'
 
-import useParsedQueryString from './useParsedQueryString'
+// import useParsedQueryString from './useParsedQueryString'
 import { parsedQueryString } from './useParsedQueryString'
 
 /**
@@ -40,17 +40,17 @@ function storeLocale(): SupportedLocale | undefined {
 export const initialLocale =
   parseLocale(parsedQueryString().lng) ?? storeLocale() ?? navigatorLocale() ?? DEFAULT_LOCALE
 
-function useUrlLocale() {
-  const parsed = useParsedQueryString()
-  return parseLocale(parsed.lng)
-}
+// function useUrlLocale() {
+//   const parsed = useParsedQueryString()
+//   return parseLocale(parsed.lng)
+// }
 
 /**
  * Returns the currently active locale, from a combination of user agent, query string, and user settings stored in redux
  * Stores the query string locale in redux (if set) to persist across sessions
  */
 export function useActiveLocale(): SupportedLocale {
-  const urlLocale = useUrlLocale()
-  const userLocale = useUserLocale()
-  return useMemo(() => urlLocale ?? userLocale ?? navigatorLocale() ?? DEFAULT_LOCALE, [urlLocale, userLocale])
+  // const urlLocale = useUrlLocale()
+  // const userLocale = useUserLocale()
+  return 'en-US' // useMemo(() => urlLocale ?? userLocale ?? navigatorLocale() ?? DEFAULT_LOCALE, [urlLocale, userLocale])
 }

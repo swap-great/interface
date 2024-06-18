@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import Card, { DarkGreyCard } from 'components/Card'
-import Row, { AutoRow, RowBetween } from 'components/Row'
+import { AutoRow, RowBetween } from 'components/Row'
 import { useEffect, useRef } from 'react'
 import { ArrowDown, Info, X } from 'react-feather'
 import ReactGA from 'react-ga4'
@@ -55,20 +55,20 @@ const EXTERNAL_APIS = [
     name: 'Infura',
     description: <Trans>The app fetches on-chain data and constructs contract calls with an Infura API.</Trans>,
   },
-  {
-    name: 'TRM Labs',
-    description: (
-      <>
-        <Trans>
-          The app securely collects your wallet address and shares it with TRM Labs Inc. for risk and compliance
-          reasons.
-        </Trans>{' '}
-        <ExternalLink href="https://help.uniswap.org/en/articles/5675203-terms-of-service-faq">
-          <Trans>Learn more</Trans>
-        </ExternalLink>
-      </>
-    ),
-  },
+  // {
+  //   name: 'TRM Labs',
+  //   description: (
+  //     <>
+  //       <Trans>
+  //         The app securely collects your wallet address and shares it with TRM Labs Inc. for risk and compliance
+  //         reasons.
+  //       </Trans>{' '}
+  //       <ExternalLink href="https://help.uniswap.org/en/articles/5675203-terms-of-service-faq">
+  //         <Trans>Learn more</Trans>
+  //       </ExternalLink>
+  //     </>
+  //   ),
+  // },
   {
     name: 'Google Analytics',
     description: <Trans>The app logs anonymized usage statistics in order to improve over time.</Trans>,
@@ -167,11 +167,11 @@ export function PrivacyPolicy() {
               </AutoColumn>
             </DarkGreyCard>
           ))}
-          <Row justify="center" marginBottom="1rem">
+          {/* <Row justify="center" marginBottom="1rem">
             <ExternalLink href="https://help.uniswap.org/en/articles/5675203-terms-of-service-faq">
               <Trans>Learn more</Trans>
             </ExternalLink>
-          </Row>
+          </Row> */}
         </AutoColumn>
       </AutoColumn>
     </Wrapper>
