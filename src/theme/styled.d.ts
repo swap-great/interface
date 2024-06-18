@@ -57,6 +57,11 @@ export interface Colors {
   error: Color
   success: Color
   warning: Color
+  // change
+  secondary70: Color
+  textPrimary: Color
+  textSecondary70: Color
+  primary: Color
 }
 
 declare module 'styled-components/macro' {

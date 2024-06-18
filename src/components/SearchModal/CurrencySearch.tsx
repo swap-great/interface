@@ -10,7 +10,7 @@ import useNativeCurrency from 'lib/hooks/useNativeCurrency'
 import { getTokenFilter } from 'lib/hooks/useTokenList/filtering'
 import { tokenComparator, useSortTokensByQuery } from 'lib/hooks/useTokenList/sorting'
 import { KeyboardEvent, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Edit } from 'react-feather'
+// import { Edit } from 'react-feather'
 import ReactGA from 'react-ga4'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
@@ -19,10 +19,10 @@ import { useAllTokenBalances } from 'state/wallet/hooks'
 import styled from 'styled-components/macro'
 
 import { useAllTokens, useIsUserAddedToken, useSearchInactiveTokenLists, useToken } from '../../hooks/Tokens'
-import { ButtonText, CloseIcon, IconWrapper, ThemedText } from '../../theme'
+import { CloseIcon, ThemedText } from '../../theme'
 import { isAddress } from '../../utils'
 import Column from '../Column'
-import Row, { RowBetween, RowFixed } from '../Row'
+import Row, { RowBetween } from '../Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import ImportRow from './ImportRow'
@@ -34,15 +34,15 @@ const ContentWrapper = styled(Column)`
   position: relative;
 `
 
-const Footer = styled.div`
-  width: 100%;
-  border-radius: 20px;
-  padding: 20px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  background-color: ${({ theme }) => theme.bg1};
-  border-top: 1px solid ${({ theme }) => theme.bg2};
-`
+// const Footer = styled.div`
+//   width: 100%;
+//   border-radius: 20px;
+//   padding: 20px;
+//   border-top-left-radius: 0;
+//   border-top-right-radius: 0;
+//   background-color: ${({ theme }) => theme.bg1};
+//   border-top: 1px solid ${({ theme }) => theme.bg2};
+// `
 
 interface CurrencySearchProps {
   isOpen: boolean
@@ -229,7 +229,7 @@ export function CurrencySearch({
           </ThemedText.Main>
         </Column>
       )}
-      <Footer>
+      {/* <Footer>
         <Row justify="center">
           <ButtonText onClick={showManageView} color={theme.primary1} className="list-token-manage-button">
             <RowFixed>
@@ -242,7 +242,7 @@ export function CurrencySearch({
             </RowFixed>
           </ButtonText>
         </Row>
-      </Footer>
+      </Footer> */}
     </ContentWrapper>
   )
 }

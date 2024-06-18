@@ -1,27 +1,52 @@
 {
+  "name": "DTX-Swap",
+  "short_name": "DTX-Swap",
+  "theme_color": "#0152FF",
   "background_color": "#fff",
-  "display": "standalone",
-  "homepage_url": "https://app.uniswap.org",
-  "providedBy": { "name": "Uniswap", "url": "https://uniswap.org" },
+  "display": "browser",
+  "orientation": "",
+  "scope": "/",
+  "start_url": "/",
   "icons": [
     {
-      "src": "./images/192x192_App_Icon.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "src": "images/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
     },
     {
-      "src": "./images/512x512_App_Icon.png",
+      "src": "images/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "images/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/png"
     }
-  ],
-  "orientation": "portrait",
-  "name": "Uniswap",
-  "description": "Swap or provide liquidity on the Uniswap Protocol",
-  "iconPath": "./images/256x256_App_Icon_Pink.svg",
-  "short_name": "Uniswap",
-  "start_url": ".",
-  "theme_color": "#ff007a"
+  ]
 }

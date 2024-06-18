@@ -3,27 +3,21 @@ import useScrollPosition from '@react-hook/window-scroll'
 import { CHAIN_INFO } from 'constants/chainInfo'
 import { SupportedChainId } from 'constants/chains'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useTheme from 'hooks/useTheme'
 import { darken } from 'polished'
 import { NavLink } from 'react-router-dom'
 import { Text } from 'rebass'
-import { useShowClaimPopup, useToggleSelfClaimModal } from 'state/application/hooks'
-import { useUserHasAvailableClaim } from 'state/claim/hooks'
-import { useUserHasSubmittedClaim } from 'state/transactions/hooks'
 import { useDarkModeManager } from 'state/user/hooks'
 import { useNativeCurrencyBalances } from 'state/wallet/hooks'
 import styled from 'styled-components/macro'
 
 import { ReactComponent as Logo } from '../../assets/svg/logo.svg'
-import { ExternalLink, ThemedText } from '../../theme'
 import ClaimModal from '../claim/ClaimModal'
-import { CardNoise } from '../earn/styled'
 import Menu from '../Menu'
 import Row from '../Row'
-import { Dots } from '../swap/styleds'
 import Web3Status from '../Web3Status'
 import HolidayOrnament from './HolidayOrnament'
 import NetworkSelector from './NetworkSelector'
+import { isMobile } from 'utils/userAgent'
 
 const HeaderFrame = styled.div<{ showBackground: boolean }>`
   display: grid;
@@ -47,17 +41,17 @@ const HeaderFrame = styled.div<{ showBackground: boolean }>`
   background-blend-mode: hard-light;
 
   ${({ theme }) => theme.mediaWidth.upToLarge`
-    grid-template-columns: 48px 1fr 1fr;
+    grid-template-columns: 120px 1fr 1fr;
   `};
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding:  1rem;
+    padding: 1rem;
     grid-template-columns: 1fr 1fr;
   `};
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding:  1rem;
-    grid-template-columns: 36px 1fr;
+    grid-template-columns: 44px 1fr;
   `};
 `
 
@@ -88,7 +82,6 @@ const HeaderElement = styled.div`
 
 const HeaderLinks = styled(Row)`
   justify-self: center;
-  background-color: ${({ theme }) => theme.bg0};
   width: fit-content;
   padding: 2px;
   border-radius: 16px;
@@ -112,9 +105,6 @@ const HeaderLinks = styled(Row)`
     bottom: 0; right: 50%;
     transform: translate(50%,-50%);
     margin: 0 auto;
-    background-color: ${({ theme }) => theme.bg0};
-    border: 1px solid ${({ theme }) => theme.bg2};
-    box-shadow: 0px 6px 10px rgb(0 0 0 / 2%);
   `};
 `
 
@@ -122,7 +112,7 @@ const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: ${({ theme, active }) => (!active ? theme.bg0 : theme.bg0)};
+  color: ${({ theme, active }) => (active ? theme.primary : theme.text1)};
   border-radius: 16px;
   white-space: nowrap;
   width: 100%;
@@ -130,29 +120,6 @@ const AccountElement = styled.div<{ active: boolean }>`
 
   :focus {
     border: 1px solid blue;
-  }
-`
-
-const UNIAmount = styled(AccountElement)`
-  color: white;
-  padding: 4px 8px;
-  height: 36px;
-  font-weight: 500;
-  background-color: ${({ theme }) => theme.bg3};
-  background: radial-gradient(174.47% 188.91% at 1.84% 0%, #ff007a 0%, #2172e5 100%), #edeef2;
-`
-
-const UNIWrapper = styled.span`
-  width: fit-content;
-  position: relative;
-  cursor: pointer;
-
-  :hover {
-    opacity: 0.8;
-  }
-
-  :active {
-    opacity: 0.9;
   }
 `
 
@@ -207,41 +174,12 @@ const StyledNavLink = styled(NavLink).attrs({
     border-radius: 14px;
     font-weight: 600;
     justify-content: center;
-    color: ${({ theme }) => theme.text1};
-    background-color: ${({ theme }) => theme.bg1};
+    color: ${({ theme }) => theme.primary};
   }
 
   :hover,
   :focus {
     color: ${({ theme }) => darken(0.1, theme.text1)};
-  }
-`
-
-const StyledExternalLink = styled(ExternalLink).attrs({
-  activeClassName,
-})<{ isActive?: boolean }>`
-  ${({ theme }) => theme.flexRowNoWrap}
-  align-items: left;
-  border-radius: 3rem;
-  outline: none;
-  cursor: pointer;
-  text-decoration: none;
-  color: ${({ theme }) => theme.text2};
-  font-size: 1rem;
-  width: fit-content;
-  margin: 0 12px;
-  font-weight: 500;
-
-  &.${activeClassName} {
-    border-radius: 14px;
-    font-weight: 600;
-    color: ${({ theme }) => theme.text1};
-  }
-
-  :hover,
-  :focus {
-    color: ${({ theme }) => darken(0.1, theme.text1)};
-    text-decoration: none;
   }
 `
 
@@ -250,29 +188,26 @@ export default function Header() {
 
   const userEthBalance = useNativeCurrencyBalances(account ? [account] : [])?.[account ?? '']
   const [darkMode] = useDarkModeManager()
-  const { white, black } = useTheme()
-
-  const toggleClaimModal = useToggleSelfClaimModal()
-
-  const availableClaim: boolean = useUserHasAvailableClaim(account)
-
-  const { claimTxn } = useUserHasSubmittedClaim(account ?? undefined)
-
-  const showClaimPopup = useShowClaimPopup()
 
   const scrollY = useScrollPosition()
 
   const {
-    infoLink,
     nativeCurrency: { symbol: nativeCurrencySymbol },
   } = CHAIN_INFO[chainId ? chainId : SupportedChainId.MAINNET]
-
+  const scrollGt45 = scrollY > 45
+  //
   return (
-    <HeaderFrame showBackground={scrollY > 45}>
+    <HeaderFrame showBackground={scrollGt45}>
       <ClaimModal />
       <Title href=".">
         <UniIcon>
-          <Logo fill={darkMode ? white : black} width="24px" height="100%" title="logo" />
+          <Logo
+            style={{ color: darkMode ? '#fff' : '#0152FF' }}
+            fill={'#0152FF'}
+            width={isMobile ? '44px' : '83px'}
+            height="100%"
+            title="logo"
+          />
           <HolidayOrnament />
         </UniIcon>
       </Title>
@@ -293,15 +228,6 @@ export default function Header() {
         >
           <Trans>Pool</Trans>
         </StyledNavLink>
-        {(!chainId || chainId === SupportedChainId.MAINNET) && (
-          <StyledNavLink id={`vote-nav-link`} to={'/vote'}>
-            <Trans>Vote</Trans>
-          </StyledNavLink>
-        )}
-        <StyledExternalLink id={`charts-nav-link`} href={infoLink}>
-          <Trans>Charts</Trans>
-          <sup>↗</sup>
-        </StyledExternalLink>
       </HeaderLinks>
 
       <HeaderControls>
@@ -309,22 +235,6 @@ export default function Header() {
           <NetworkSelector />
         </HeaderElement>
         <HeaderElement>
-          {availableClaim && !showClaimPopup && (
-            <UNIWrapper onClick={toggleClaimModal}>
-              <UNIAmount active={!!account && !availableClaim} style={{ pointerEvents: 'auto' }}>
-                <ThemedText.White padding="0 2px">
-                  {claimTxn && !claimTxn?.receipt ? (
-                    <Dots>
-                      <Trans>Claiming UNI</Trans>
-                    </Dots>
-                  ) : (
-                    <Trans>Claim UNI</Trans>
-                  )}
-                </ThemedText.White>
-              </UNIAmount>
-              <CardNoise />
-            </UNIWrapper>
-          )}
           <AccountElement active={!!account}>
             {account && userEthBalance ? (
               <BalanceText style={{ flexShrink: 0, userSelect: 'none' }} pl="0.75rem" pr="0.5rem" fontWeight={500}>

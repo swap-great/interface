@@ -27,6 +27,7 @@ import RemoveLiquidity from './RemoveLiquidity'
 import RemoveLiquidityV3 from './RemoveLiquidity/V3'
 import Swap from './Swap'
 import { OpenClaimAddressModalAndRedirectToSwap, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import Footer from 'components/Footer'
 
 const Vote = lazy(() => import('./Vote'))
 
@@ -40,6 +41,7 @@ const BodyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: calc(100vh - 379px);
   padding: 120px 16px 0px 16px;
   align-items: center;
   flex: 1;
@@ -128,6 +130,7 @@ export default function App() {
             </Suspense>
             <Marginer />
           </BodyWrapper>
+          <Footer />
         </AppWrapper>
       </Web3ReactManager>
     </ErrorBoundary>
